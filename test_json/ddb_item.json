@@ -1,0 +1,69 @@
+{
+  "Item": {
+    "binary": {
+      "B": "YWJjZA=="
+    },
+    "bool": {
+      "BOOL": true
+    },
+    "binary_set": {
+      "BS": [
+        "YWJjZA==",
+        "ZWZnaA==",
+        "aWprbA=="
+      ]
+    },
+    "number": {
+      "N": "3.14159"
+    },
+    "number_set": {
+      "NS": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    "null": {
+      "NULL": true
+    },
+    "string": {
+      "S": "this is a string value"
+    },
+    "string_set": {
+      "SS": [
+        "one",
+        "two",
+        "three"
+      ]
+    },
+    "list": {
+      "L": [
+        {
+          "binary": {
+            "B": "YWJjZA=="
+          }
+        },
+        {
+          "bool": {
+            "BOOL": true
+          }
+        }
+      ]
+    },
+    "map": {
+      "M": {
+        "string": {
+          "S": "this is a string value"
+        },
+        "string_set": {
+          "SS": [
+            "one",
+            "two",
+            "three"
+          ]
+        }
+      }
+    }
+  }
+}

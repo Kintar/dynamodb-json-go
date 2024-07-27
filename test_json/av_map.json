@@ -1,0 +1,14 @@
+{
+  "M": {
+    "string": {
+      "S": "this is a string value"
+    },
+    "string_set": {
+      "SS": [
+        "one",
+        "two",
+        "three"
+      ]
+    }
+  }
+}
