@@ -5,6 +5,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"github.com/stretchr/testify/assert"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -56,6 +57,24 @@ var avTestValues = []avTestDef{
 			Value: true,
 		},
 	},
+	{
+		filename: "av_list",
+		expected: &types.AttributeValueMemberL{
+			Value: []types.AttributeValue{
+				&types.AttributeValueMemberNULL{Value: true},
+				&types.AttributeValueMemberBOOL{Value: true},
+			},
+		},
+	},
+	{
+		filename: "av_map",
+		expected: &types.AttributeValueMemberM{
+			Value: map[string]types.AttributeValue{
+				"string":     &types.AttributeValueMemberS{Value: "this is a string value"},
+				"string_set": &types.AttributeValueMemberSS{Value: []string{"one", "two", "three"}},
+			},
+		},
+	},
 }
 
 func TestBasicAvTypes(t *testing.T) {
@@ -64,14 +83,34 @@ func TestBasicAvTypes(t *testing.T) {
 			rawData, err := os.ReadFile(fmt.Sprintf("test_json%s%s.json", string(os.PathSeparator), data.filename))
 			if err != nil {
 				t.Error(err)
-				return
+				t.FailNow()
 			}
 
-			if v, err := unmarshalRawDdbValue(rawData); err != nil {
+			if v, err := UnmarshalRawDdbValue(rawData); err != nil {
 				t.Error(err)
 			} else {
 				assert.Equal(t, data.expected, v)
 			}
 		})
+	}
+}
+
+func TestUnmarshalDynamoDbItem(t *testing.T) {
+	rawData, err := os.ReadFile(fmt.Sprintf("test_json%s%s.json", string(os.PathSeparator), "ddb_item"))
+	if err != nil {
+		t.Errorf("could not read ddb_item.json")
+		t.FailNow()
+	}
+
+	ddbmap, err := UnmarshalDynamoDbItem(rawData)
+	if err != nil {
+		t.Error(err)
+		t.FailNow()
+	}
+
+	assert.Equal(t, len(avTestValues), len(ddbmap))
+	for _, v := range avTestValues {
+		key := strings.SplitN(v.filename, "_", 2)[1]
+		assert.Equalf(t, v.expected, ddbmap[key], "bad value for %s", key)
 	}
 }

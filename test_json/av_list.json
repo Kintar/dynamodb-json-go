@@ -1,14 +1,10 @@
 {
   "L": [
     {
-      "binary": {
-        "B": "YWJjZA=="
-      }
+      "NULL": true
     },
     {
-      "bool": {
-        "BOOL": true
-      }
+      "BOOL": true
     }
   ]
 }
